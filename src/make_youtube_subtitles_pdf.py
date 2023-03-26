@@ -38,16 +38,14 @@ def convert_txt_to_pdf(file_name: str, title: str):
   pdf.set_font("NanumGothic", size=12)
   pdf.multi_cell(0, 10, txt=text)
   pdf.output(f"../{title}/{file_name}.pdf")
-
+  
 def youtube_title (url: str) -> str:
   response = requests.get(url)
-
 # Parse the HTML content using BeautifulSoup
   soup = BeautifulSoup(response.content, "html.parser")
-  
   # Find the video title element and get its text
-  title_element = soup.find("h1", {"class": "title"})
-  return title_element.text.strip()
+  title_element = soup.find("title").text.strip()
+  return title_element.replace(" ","_").replace("/","")
 
 # 예시
 warnings.filterwarnings("ignore", category=UserWarning)
